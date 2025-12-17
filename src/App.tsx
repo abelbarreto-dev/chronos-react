@@ -2,11 +2,12 @@ import { Fragment } from "react/jsx-runtime";
 
 import "./styles/theme.css";
 import "./styles/global.css";
+import { Heading } from "./components/Heading";
 
 export function App() {
     return (
         <Fragment>
-            <h1>Hello Heaven!</h1>
+            <Heading />
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui
                 odio commodi atque consequuntur animi illum tempore, voluptatem
