@@ -3,11 +3,17 @@ import { Fragment } from "react/jsx-runtime";
 import "./styles/theme.css";
 import "./styles/global.css";
 import { Heading } from "./components/Heading";
+import { TimerIcon } from "lucide-react";
 
 export function App() {
     return (
         <Fragment>
-            <Heading>Hello World!</Heading>
+            <Heading>
+                Hello World!
+                <button>
+                    <TimerIcon />
+                </button>
+            </Heading>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui
                 odio commodi atque consequuntur animi illum tempore, voluptatem
