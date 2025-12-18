@@ -1,0 +1,8 @@
+.count_down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.4rem;
+    line-height: 1.3;
+    font-size: clamp(8rem, 25vw, 16rem);
+}
