@@ -1,13 +1,22 @@
+import styles from "./styles.module.css";
+
 type InputTextProps = {
     id: string;
     labelText: string;
+    disabled?: boolean;
 };
 
-export const InputText = ({ id, labelText, ...rest }: InputTextProps) => {
+export const InputText = ({ id, labelText, disabled }: InputTextProps) => {
     return (
         <>
             <label htmlFor={id}>{labelText}</label>
-            <input id={id} type="text" {...rest} />
+            <input
+                className={styles.input}
+                placeholder="Nome da tarefa"
+                id={id}
+                type="text"
+                disabled={disabled}
+            />
         </>
     );
 };

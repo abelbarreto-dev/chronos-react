@@ -4,8 +4,8 @@ import styles from "./styles.module.css";
 export const Form = () => {
     return (
         <form action="" className={styles.form}>
-            <div className="form_row">
-                <InputText id="task-name" labelText="Tarefa:" />
+            <div className={styles.form_row}>
+                <InputText id="task-name" labelText="Tarefa:"/>
             </div>
 
             <div className={styles.form_row}>
