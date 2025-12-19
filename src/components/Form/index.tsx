@@ -1,3 +1,4 @@
+import { Cycle } from "../Cycle";
 import { InputText } from "../InputText";
 import styles from "./styles.module.css";
 
@@ -16,8 +17,7 @@ export const Form = () => {
             </div>
 
             <div className={styles.form_row}>
-                <p>Ciclos:</p>
-                <p>0000000000</p>
+                <Cycle typeCycle="long-rest" />
             </div>
 
             <div className={styles.form_row}>
