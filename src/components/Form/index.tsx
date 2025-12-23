@@ -3,14 +3,51 @@ import { Button } from "../Button";
 import { Cycle } from "../Cycle";
 import { InputText } from "../InputText";
 import { useRef } from "react";
+import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
+import type { TaskModel } from "../../models/TaskModel";
 
 import styles from "./styles.module.css";
 
 export const Form = () => {
+    const { setState } = useTaskContext();
     const taskNameInput = useRef<HTMLInputElement>(null);
 
     const handleStartPomodoro = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (!taskNameInput.current) return;
+
+        const taskName = taskNameInput.current.value.trim();
+
+        if (!taskName) {
+            alert("Digite o nome da tarefa");
+            return;
+        }
+
+        const taskModel: TaskModel = {
+            id: Date.now(),
+            name: taskName,
+            startDate: Date.now(),
+            duration: 1,
+            completeDate: null,
+            interruptDate: null,
+            type: "workTime",
+            status: "Iniciado",
+        };
+
+        const secondsReamaining = taskModel.duration * 60;
+
+        setState(prev => {
+            return {
+                ...prev,
+                config: { ...prev.config },
+                activeTask: taskModel,
+                currentCycle: 1, // to chekc
+                secondsReamaining: secondsReamaining, // to check
+                formatedSecondsRemaining: "00:00", // to check
+                tasks: [...prev.tasks, taskModel],
+            };
+        });
     };
 
     return (
