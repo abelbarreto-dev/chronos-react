@@ -2,15 +2,9 @@ import { PlayCircleIcon } from "lucide-react";
 import { Button } from "../Button";
 import { Cycle } from "../Cycle";
 import { InputText } from "../InputText";
-import type { TaskStateModel } from "../../models/TaskStateModel";
 import styles from "./styles.module.css";
 
-type FormProps = {
-    state: TaskStateModel;
-    setState: (state: TaskStateModel) => void;
-};
-
-export const Form = ({ state, setState }: FormProps) => {
+export const Form = () => {
     return (
         <form action="" className={styles.form}>
             <div className={styles.form_row}>
@@ -20,7 +14,7 @@ export const Form = ({ state, setState }: FormProps) => {
             <div className={styles.form_row}>
                 <p>
                     Nesse ciclo <strong>descanse</strong> por{" "}
-                    <strong>{state.config.shortBreakTime} min.</strong>
+                    <strong>5 min.</strong>
                 </p>
             </div>
 
