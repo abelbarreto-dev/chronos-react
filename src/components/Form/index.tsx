@@ -2,10 +2,13 @@ import { PlayCircleIcon } from "lucide-react";
 import { Button } from "../Button";
 import { Cycle } from "../Cycle";
 import { InputText } from "../InputText";
+import { useState } from "react";
 
 import styles from "./styles.module.css";
 
 export const Form = () => {
+    const [taskName, setTaskName] = useState<string | undefined>("");
+
     const handleStartPomodoro = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     };
@@ -13,7 +16,7 @@ export const Form = () => {
     return (
         <form onSubmit={handleStartPomodoro} action="POST" className={styles.form}>
             <div className={styles.form_row}>
-                <InputText id="task-name" labelText="Tarefa:" />
+                <InputText id="task-name" labelText="Tarefa:" value={taskName} setValue={setTaskName} />
             </div>
 
             <div className={styles.form_row}>
