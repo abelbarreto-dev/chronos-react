@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Home } from "./pages/Home";
+import { TaskContextProvider } from "./contexts/TaskContext";
 import type { TaskStateModel } from "./models/TaskStateModel";
 
 import "./styles/theme.css";
 import "./styles/global.css";
-import { TaskContext } from "./contexts/TaskContext";
 
 const initialState: TaskStateModel = {
     tasks: [],
@@ -23,8 +23,8 @@ export const App = () => {
     const [state, setState] = useState<TaskStateModel>(initialState);
 
     return (
-        <TaskContext.Provider value={{ key: state }}>
+        <TaskContextProvider>
             <Home />
-        </TaskContext.Provider>
+        </TaskContextProvider>
     );
 };
