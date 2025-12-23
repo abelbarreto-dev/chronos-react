@@ -33,7 +33,7 @@ export const Form = () => {
             id: Date.now(),
             name: taskName,
             startDate: Date.now(),
-            duration: 1,
+            duration: state.config[nextCycleType],
             completeDate: null,
             interruptDate: null,
             type: nextCycleType,
