@@ -1,30 +1,29 @@
+import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import styles from "./styles.module.css";
 
-type CycleTypes = {
-    typeCycle: "workTime" | "shortBreakTime" | "longBreakTime";
-}
+export const Cycle = () => {
+    const { state } = useTaskContext();
+    
+    const color: { [key: string]: string } = {
+        workTime: styles.work_time,
+        shortBreakTime: styles.rest_time,
+        longBreakTime: styles.long_rest_time,
+    };
 
-export const Cycle = (
-    { typeCycle }: CycleTypes
-) => {
-    const color = {
-        "workTime": styles.play,
-        "shortBreakTime": styles.rest,
-        "longBreakTime": styles.long_rest
-    }[typeCycle];
 
     return (
-        <div className={`${styles.cycle} ${color}`}>
+        <div className={styles.cycle}>
             <span>Ciclos:</span>
             <div className={styles.cycle_dots}>
-                <span className={`${styles.cycle_dot} ${styles.work_time}`}></span>
-                <span className={`${styles.cycle_dot} ${styles.rest_time}`}></span>
-                <span className={`${styles.cycle_dot} ${styles.work_time}`}></span>
-                <span className={`${styles.cycle_dot} ${styles.rest_time}`}></span>
-                <span className={`${styles.cycle_dot} ${styles.work_time}`}></span>
-                <span className={`${styles.cycle_dot} ${styles.rest_time}`}></span>
-                <span className={`${styles.cycle_dot} ${styles.work_time}`}></span>
-                <span className={`${styles.cycle_dot} ${styles.long_rest_time}`}></span>
+                {state.tasks.map(task => {
+                    return (
+                        <span
+                            className={`${styles.cycle_dot} ${
+                                color[task.type]
+                            }`}
+                        ></span>
+                    );
+                })}
             </div>
         </div>
     );
