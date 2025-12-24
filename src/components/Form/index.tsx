@@ -78,7 +78,7 @@ export const Form = () => {
             </div>
 
             <div className={styles.form_row}>
-                <Cycle typeCycle="longBreakTime" />
+                <Cycle />
             </div>
 
             <div className={styles.form_row}>
