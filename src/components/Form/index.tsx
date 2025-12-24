@@ -67,6 +67,7 @@ export const Form = () => {
                     id="task-name"
                     labelText="Tarefa:"
                     ref={taskNameInput}
+                    disabled={!!state.activeTask}
                 />
             </div>
 
