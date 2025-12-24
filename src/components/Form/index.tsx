@@ -49,9 +49,20 @@ export const Form = () => {
                 config: { ...prev.config },
                 activeTask: taskModel,
                 currentCycle: nextCycle,
-                secondsReamaining: secondsReamaining, // to check
+                secondsReamaining: secondsReamaining,
                 formatedSecondsRemaining: getTimeFormated(secondsReamaining),
                 tasks: [...prev.tasks, taskModel],
+            };
+        });
+    };
+
+    const handleStopPomodoro = () => {
+        setState(prev => {
+            return {
+                ...prev,
+                activeTask: null,
+                secondsReamaining: 0,
+                formatedSecondsRemaining: "00:00",
             };
         });
     };
@@ -87,7 +98,8 @@ export const Form = () => {
             <div className={styles.form_row}>
                 {!state.activeTask ? (
                     <Button
-                        id="form-btn"
+                        key="form-btn-start"
+                        id="form-btn-start"
                         ariaLabel="Iniciar Nova Tarefa"
                         title="Iniciar Nova Tarefa"
                         type="submit"
@@ -96,12 +108,14 @@ export const Form = () => {
                     />
                 ) : (
                     <Button
-                        id="form-btn"
+                        key="form-btn-stop"
+                        id="form-btn-stop"
                         ariaLabel="Interromper Tarefa"
                         title="Interromper Tarefa"
                         type="button"
                         icon={<StopCircleIcon />}
                         color="red"
+                        onClick={handleStopPomodoro}
                     />
                 )}
             </div>

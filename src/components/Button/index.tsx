@@ -8,6 +8,7 @@ type ButtonProps = {
     title: string;
     color?: "green" | "red";
     disabled?: boolean;
+    onClick?: () => void;
 };
 
 export const Button = ({
@@ -18,6 +19,7 @@ export const Button = ({
     title,
     color = "green",
     disabled,
+    onClick,
 }: ButtonProps) => {
     return (
         <>
@@ -28,6 +30,7 @@ export const Button = ({
                 type={type}
                 className={`${styles.button} ${styles[color]}`}
                 disabled={disabled}
+                onClick={onClick}
             >
                 {icon}
             </button>
