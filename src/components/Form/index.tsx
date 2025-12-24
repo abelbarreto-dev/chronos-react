@@ -10,6 +10,7 @@ import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 import type { TaskModel } from "../../models/TaskModel";
 
 import styles from "./styles.module.css";
+import { Tips } from "../Tips";
 
 export const Form = () => {
     const { state, dispatch } = useTaskContext();
@@ -17,13 +18,6 @@ export const Form = () => {
 
     const nextCycle = getNextCycle(state.currentCycle);
     const nextCycleType = getNextCycleType(nextCycle);
-
-    const phrases = {
-        workTime: <p>Nesse ciclo <strong>mantenha o foco</strong> por <strong>{state.config.workTime} min.</strong></p>,
-        shortBreakTime: <p>Nesse ciclo <strong>descanse</strong> por <strong>{state.config.shortBreakTime} min.</strong></p>,
-        longBreakTime: <p>Nesse ciclo <strong>descanse</strong> por <strong>{state.config.longBreakTime} min.</strong></p>,
-        default: <p>Ciclo parado!</p>
-    };
 
     const handleStartPomodoro = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -76,7 +70,7 @@ export const Form = () => {
             </div>
 
             <div className={styles.form_row}>
-                {phrases[(state.activeTask?.type || "default")]}
+                <Tips />
             </div>
 
             {state.currentCycle !== 0 && (
