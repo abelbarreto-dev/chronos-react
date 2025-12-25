@@ -1,7 +1,23 @@
-const countPomodoro = (event) => {
-    console.log("WORKER HAS RECEIVED", event.data);
+const countPomodoro = event => {
+    console.log("WORKER recebeu:", event.data);
 
-    console.log("Hello to you, darling!");
+    switch (event.data) {
+        case "FAVOR": {
+            self.postMessage("Sim, posso fazer um favor");
+            break;
+        }
+        case "FALA_OI": {
+            self.postMessage("OK: OI!");
+            break;
+        }
+        case "FECHAR": {
+            self.postMessage("Tá bom, vou fechar");
+            self.close();
+            break;
+        }
+        default:
+            self.postMessage("Não entendi");
+    }
 };
 
 self.onmessage = countPomodoro;

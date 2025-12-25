@@ -46,12 +46,6 @@ export const Form = () => {
             type: TaskActionTypes.START_TASK,
             payload: taskModel,
         });
-
-        const worker = new Worker(
-            new URL("../../workers/timerWorker.js", import.meta.url),
-        );
-
-        worker.postMessage("Hello World");
     };
 
     const handleStopPomodoro = () => {
