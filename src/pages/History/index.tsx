@@ -5,13 +5,25 @@ import { PageTemplate } from "../../templates/PageTemplate";
 import { Container } from "../../components/Container";
 import { Button } from "../../components/Button";
 
-import styles from "./styles.module.css";
 import { getTaskType } from "../../utils/getTaskType";
 import { getFormatDate } from "../../utils/getFormatDate";
 import { getTaskStatus } from "../../utils/getTaskSratus";
+import { useReducer } from "react";
+import { getSortTasks } from "../../utils/getSortTasks";
+import type { TaskModel } from "../../models/TaskModel";
+
+import styles from "./styles.module.css";
 
 export const History = () => {
     const { state } = useTaskContext();
+    const [tasksData] = useReducer(
+        (
+            tasks: TaskModel[] = state.tasks,
+            attrOps = "task",
+            reverse: boolean = false,
+        ) => getSortTasks(tasks, attrOps, reverse),
+        getSortTasks(state.tasks, "task", false),
+    );
 
     return (
         <PageTemplate>
@@ -44,14 +56,21 @@ export const History = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {state.tasks.map(task => {
-                                return (<tr key={`task-${task.id}`}>
-                                    <td>{task.name}</td>
-                                    <td>{task.duration}min</td>
-                                    <td>{getFormatDate(task.startDate)}</td>
-                                    <td>{getTaskStatus(task, state.activeTask)}</td>
-                                    <td>{getTaskType(task.type)}</td>
-                                </tr>);
+                            {tasksData && tasksData.map(task => {
+                                return (
+                                    <tr key={`task-${task.id}`}>
+                                        <td>{task.name}</td>
+                                        <td>{task.duration}min</td>
+                                        <td>{getFormatDate(task.startDate)}</td>
+                                        <td>
+                                            {getTaskStatus(
+                                                task,
+                                                state.activeTask,
+                                            )}
+                                        </td>
+                                        <td>{getTaskType(task.type)}</td>
+                                    </tr>
+                                );
                             })}
                         </tbody>
                     </table>
