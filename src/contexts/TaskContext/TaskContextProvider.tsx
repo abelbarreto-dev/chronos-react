@@ -42,7 +42,10 @@ export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
     useEffect(() => {
         if (!state.activeTask) {
             worker.terminate();
+            document.title = "Chronos Pomodoro";
         }
+        else
+            document.title = `${state.formatedSecondsRemaining} - Chronos Pomodoro`;
 
         worker.postMessage(state);
     }, [worker, state]);

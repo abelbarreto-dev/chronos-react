@@ -7,11 +7,21 @@ type InputTextProps = {
     disabled?: boolean;
     required?: boolean;
     ref?: Ref<HTMLInputElement>;
+    defaultValue?: string;
     value?: string;
     setValue?: (value?: string) => void;
 };
 
-export const InputText = ({ id, labelText, disabled, required, value, setValue, ref }: InputTextProps) => {
+export const InputText = ({
+    id,
+    labelText,
+    disabled,
+    required,
+    defaultValue,
+    value,
+    setValue,
+    ref,
+}: InputTextProps) => {
     return (
         <>
             <label htmlFor={id}>{labelText}</label>
@@ -20,8 +30,11 @@ export const InputText = ({ id, labelText, disabled, required, value, setValue, 
                 placeholder="Nome da tarefa"
                 id={id}
                 type="text"
+                defaultValue={defaultValue}
                 value={value}
-                onChange={(e) => setValue && setValue(e.target.value || undefined)}
+                onChange={e =>
+                    setValue && setValue(e.target.value || undefined)
+                }
                 ref={ref}
                 disabled={disabled}
                 required={required}

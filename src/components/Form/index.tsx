@@ -16,6 +16,7 @@ import styles from "./styles.module.css";
 export const Form = () => {
     const { state, dispatch } = useTaskContext();
     const taskNameInput = useRef<HTMLInputElement>(null);
+    const lastTaskName = state.tasks[state.tasks.length - 1]?.name || "";
 
     const nextCycle = getNextCycle(state.currentCycle);
     const nextCycleType = getNextCycleType(nextCycle);
@@ -73,6 +74,7 @@ export const Form = () => {
                     labelText="Tarefa:"
                     ref={taskNameInput}
                     disabled={!!state.activeTask}
+                    defaultValue={lastTaskName}
                 />
             </div>
 
