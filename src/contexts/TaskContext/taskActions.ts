@@ -6,6 +6,7 @@ export enum TaskActionTypes {
     CLEAR_STATE = "CLEAR_STATE",
     THE_FINAL_COUNT_DOWN = "THE_FINAL_COUNT_DOWN",
     COMPLETE_TASK = "COMPLET_TASK",
+    REFLASH_TASK = "REFLASH_TASK",
 }
 
 export type TaskActionModel =
@@ -25,4 +26,12 @@ export type TaskActionModel =
       }
     | {
           type: TaskActionTypes.CLEAR_STATE;
+      }
+    | {
+          type: TaskActionTypes.REFLASH_TASK;
+          payload: {
+              workTime: number;
+              shortBreakTime: number;
+              longBreakTime: number;
+          };
       };

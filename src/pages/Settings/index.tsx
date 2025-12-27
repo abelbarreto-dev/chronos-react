@@ -9,9 +9,10 @@ import styles from "./styles.module.css";
 import { InputNumber } from "../../components/InputNumber";
 import { useState } from "react";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
+import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 
 export const Settings = () => {
-    const { state } = useTaskContext();
+    const { state, dispatch } = useTaskContext();
 
     const [workTime, setWorkTime] = useState<number>(state.config.workTime);
     const [shortBreakTime, setShortBreakTime] = useState<number>(
@@ -57,7 +58,9 @@ export const Settings = () => {
         setLongBreakTime(value);
     };
 
-    const handleUpdatePomodoro = () => {
+    const handleUpdatePomodoro = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
         const newState = {
             ...state,
             config: {
@@ -68,6 +71,10 @@ export const Settings = () => {
         };
 
         localStorage.setItem("state", JSON.stringify(newState));
+        dispatch({
+            type: TaskActionTypes.REFLASH_TASK,
+            payload: newState.config,
+        });
     };
 
     return (

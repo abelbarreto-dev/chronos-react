@@ -61,6 +61,9 @@ export const taskReducer = (
         case TaskActionTypes.CLEAR_STATE: {
             return {...initialTaskStateData};
         }
+        case TaskActionTypes.REFLASH_TASK: {
+            return {...state, config: action.payload }
+        }
         default:
             return { ...state };
     }
