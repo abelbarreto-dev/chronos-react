@@ -7,74 +7,52 @@ import { SaveIcon } from "lucide-react";
 
 import styles from "./styles.module.css";
 import { InputNumber } from "../../components/InputNumber";
-import { useState } from "react";
+import { useRef } from "react";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
+import type { TaskStateModel } from "../../models/TaskStateModel";
+import { showMessage } from "../../adapters/showMessage";
 
 export const Settings = () => {
     const { state, dispatch } = useTaskContext();
 
-    const [workTime, setWorkTime] = useState<number>(state.config.workTime);
-    const [shortBreakTime, setShortBreakTime] = useState<number>(
-        state.config.shortBreakTime,
-    );
-    const [longBreakTime, setLongBreakTime] = useState<number>(
-        state.config.longBreakTime,
-    );
-
-    const updateWorkTimeValue = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        const valueStr = event.target.value;
-
-        if (!valueStr) return;
-
-        const value = parseInt(valueStr);
-
-        setWorkTime(value);
-    };
-
-    const updateShortBreakTimeValue = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        const valueStr = event.target.value;
-
-        if (!valueStr) return;
-
-        const value = parseInt(valueStr);
-
-        setShortBreakTime(value);
-    };
-
-    const updateLongBreakTimeValue = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        const valueStr = event.target.value;
-
-        if (!valueStr) return;
-
-        const value = parseInt(valueStr);
-
-        setLongBreakTime(value);
-    };
+    const workTime = useRef<HTMLInputElement>(null);
+    const shortBreakTime = useRef<HTMLInputElement>(null);
+    const longBreakTime = useRef<HTMLInputElement>(null);
 
     const handleUpdatePomodoro = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const newState = {
+        const config = {
+            workTime: workTime.current?.valueAsNumber,
+            shortBreakTime: shortBreakTime.current?.valueAsNumber,
+            longBreakTime: longBreakTime.current?.valueAsNumber,
+        };
+
+        if (Object.values(config).includes(NaN)) {
+            showMessage.dismiss();
+            showMessage.warning("Preencha todos os valores!");
+            return;
+        }
+
+        const newState: TaskStateModel = {
             ...state,
             config: {
-                workTime: workTime,
-                shortBreakTime: shortBreakTime,
-                longBreakTime: longBreakTime,
-            },
+                workTime: config.workTime || 0,
+                shortBreakTime: config.shortBreakTime || 0,
+                longBreakTime: config.longBreakTime || 0,
+            }
         };
 
         localStorage.setItem("state", JSON.stringify(newState));
+
         dispatch({
             type: TaskActionTypes.REFLASH_TASK,
             payload: newState.config,
         });
+
+        showMessage.dismiss();
+        showMessage.success("Tempo do Pomodoro Atualizado!");
     };
 
     return (
@@ -91,14 +69,18 @@ export const Settings = () => {
             </Container>
 
             <Container>
-                <form action="" onSubmit={handleUpdatePomodoro} className={styles.formSettings}>
+                <form
+                    action=""
+                    onSubmit={handleUpdatePomodoro}
+                    className={styles.formSettings}
+                >
                     <div className={styles.formSettingsRow}>
                         <InputNumber
                             id={"workTime"}
                             labelText={"Tempo de Foco"}
                             placeHolder={"Minutes"}
-                            value={workTime}
-                            onChange={updateWorkTimeValue}
+                            ref={workTime}
+                            defaultValue={state.config.workTime}
                         />
                     </div>
 
@@ -107,8 +89,8 @@ export const Settings = () => {
                             id={"shortBreakTime"}
                             labelText={"Descanso Curto"}
                             placeHolder={"Minutes"}
-                            value={shortBreakTime}
-                            onChange={updateShortBreakTimeValue}
+                            ref={shortBreakTime}
+                            defaultValue={state.config.shortBreakTime}
                         />
                     </div>
 
@@ -117,8 +99,8 @@ export const Settings = () => {
                             id={"longBreakTime"}
                             labelText={"Descanso Curto"}
                             placeHolder={"Minutes"}
-                            value={longBreakTime}
-                            onChange={updateLongBreakTimeValue}
+                            ref={longBreakTime}
+                            defaultValue={state.config.longBreakTime}
                         />
                     </div>
 
