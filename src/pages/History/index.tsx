@@ -12,6 +12,7 @@ import { getTaskStatus } from "../../utils/getTaskSratus";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 import { getSortTasks } from "../../utils/getSortTasks";
 
+import { showMessage } from "../../adapters/showMessage";
 import styles from "./styles.module.css";
 
 export const History = () => {
@@ -20,6 +21,21 @@ export const History = () => {
     const [sortTasks, setSortTasks] = useState(() =>
         getSortTasks(state.tasks, "date", true),
     );
+    const [reload, setReload] = useState<boolean>(false);
+    
+    const closeComponent = (reason: boolean) => {
+        setReload(reason);
+
+        if (reason) {
+            dispatch({ type: TaskActionTypes.CLEAR_STATE });
+
+            const data = getSortTasks([], "date", true);
+
+            setSortTasks(data);
+
+            setReload(!reload);
+        }
+    };
 
     const handleSortTask = (column: "task" | "duration" | "date" | "type") => {
         const revert = !reverse;
@@ -32,13 +48,8 @@ export const History = () => {
     };
 
     const handleClearHistory = () => {
-        if (!confirm("Tem certeza?")) return;
-
-        dispatch({ type: TaskActionTypes.CLEAR_STATE });
-
-        const data = getSortTasks([], "date", true);
-
-        setSortTasks(data);
+        showMessage.dismiss();
+        showMessage.confirm("Tem Certeza?", closeComponent);
     };
 
     return (
